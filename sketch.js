@@ -62,11 +62,15 @@ class Puck {
             if ((this.x - this.size/2 <= player.x + player.sizeX && this.x+this.size/2 >= player.x) && (this.y+this.size/2 >= player.y && this.y-this.size/2 <= player.y + player.sizeY)) {
                 const middleY = player.y + (player.sizeY / 2);
                 if (this.y < middleY){
-                    this.xSpeed *= -1.15;
+                    this.xSpeed *= -1;
+                    if (this.xSpeed < 0) this.xSpeed -= .5;
+                    if (this.xSpeed >= 0) this.xSpeed += .5;
                     this.ySpeed = -3 * ((middleY - this.y)/(player.sizeY/2));
                     this.cd = 10;
                 } else {
-                    this.xSpeed *=  -1.15;
+                    this.xSpeed *=  -1;
+                    if (this.xSpeed < 0) this.xSpeed -= .5;
+                    if (this.xSpeed >= 0) this.xSpeed += .5;
                     this.ySpeed = 3 * ((this.y - middleY)/(player.sizeY/2));
                     this.cd = 10;
                 }
@@ -140,7 +144,7 @@ function setup() {
         balls.push(new Puck());
     }
     jugadores.push(new Player(100, 500));
-    jugadores.push(new Player(windowWidth - 100, 500));
+    jugadores.push(new Player(windowWidth - 100 - jugadores[0].sizeX, 500));
 
     // raton = new MouseBall();
 }
