@@ -1,19 +1,8 @@
 let ballCount = 1;
 let puntos = 0;
 let j1;
-let j1y = 500;
-let j2y = 500;
 let gameSpeedBase = 10;
 let gameSpeed;
-// let x = [];
-// let y = [];
-// let size = [];
-// const xSpeed = [];
-// const ySpeed = [];
-
-// let r = [];
-// let g = [];
-// let b = [];
 
 class Player{
     constructor(x, y) {
@@ -49,44 +38,46 @@ class Puck {
         ellipse(this.x, this.y, this.size);
     }
 
-    collision(player) {
+    collision(obj) {
         /*
         let dx = (this.x - other.x);
         let dy = (this.y - other.y);
         let distance = sqrt(dx * dx + yx * yx);*/
         // Player collision
+        
         if (this.cd > 0){
             this.cd--;
         } else {
 
-            if ((this.x - this.size/2 <= player.x + player.sizeX && this.x+this.size/2 >= player.x) && (this.y+this.size/2 >= player.y && this.y-this.size/2 <= player.y + player.sizeY)) {
-                const middleY = player.y + (player.sizeY / 2);
-                if (this.y < middleY){
+            if ((this.x - this.size/2 <= obj.x + obj.sizeX && this.x+this.size/2 >= obj.x) && (this.y+this.size/2 >= obj.y && this.y-this.size/2 <= obj.y + obj.sizeY)) {
+                if (obj instanceof Player) {
+                    const player = obj;
+                    console.log("he's a player");
+                    
+                    const middleY = player.y + (player.sizeY / 2);
+    
                     this.xSpeed *= -1;
                     if (this.xSpeed < 0) this.xSpeed -= .5;
                     if (this.xSpeed >= 0) this.xSpeed += .5;
-                    this.ySpeed = -3 * ((middleY - this.y)/(player.sizeY/2));
-                    this.cd = 10;
-                } else {
-                    this.xSpeed *=  -1;
-                    if (this.xSpeed < 0) this.xSpeed -= .5;
-                    if (this.xSpeed >= 0) this.xSpeed += .5;
-                    this.ySpeed = 3 * ((this.y - middleY)/(player.sizeY/2));
-                    this.cd = 10;
+    
+                    this.ySpeed = 5 * ((this.y - middleY)/(player.sizeY/2)) * Math.abs(this.xSpeed)/2;
+                    this.cd = 15;
+                    
+    
+                    // increment speed
+                    if (this.xSpeed > 15 || this.ySpeed > 15) {
+                        console.log("superfast speed");
+                        gameSpeed = gameSpeedBase + 10;
+    
+                    } else if (this.xSpeed > 7 || this.ySpeed > 7) {
+                        console.log("fast speed");
+                        gameSpeed = gameSpeedBase + 5;
+                    } else {
+                        console.log("low speed");
+                        gameSpeed = gameSpeedBase;
+                    }
                 }
-
-                // increment speed
-                if (this.xSpeed > 15 || this.ySpeed > 15) {
-                    console.log("superfast speed");
-                    gameSpeed = gameSpeedBase + 10;
-
-                } else if (this.xSpeed > 7 || this.ySpeed > 7) {
-                    console.log("fast speed");
-                    gameSpeed = gameSpeedBase + 5;
-                } else {
-                    console.log("low speed");
-                    gameSpeed = gameSpeedBase;
-                }
+                
             }
 
             
@@ -132,21 +123,10 @@ function setup() {
     frameRate(60);
     createCanvas(windowWidth, windowHeight);
     for (let i = 0; i < ballCount; i++) {
-        // x[i] = width/2;
-        // y[i] = height/2;
-        // size[i] = random(10, 50);
-        // r[i] = random(255);
-        // g[i] = random(255);
-        // b[i] = random(255);
-        // xSpeed[i] = random(-5, 5);
-        // ySpeed[i] = random(-5, 5);
-        
         balls.push(new Puck());
     }
     jugadores.push(new Player(100, 500));
     jugadores.push(new Player(windowWidth - 100 - jugadores[0].sizeX, 500));
-
-    // raton = new MouseBall();
 }
 
 function reset() {
