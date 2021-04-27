@@ -3,7 +3,8 @@ let puntos = 0;
 let j1;
 let j1y = 500;
 let j2y = 500;
-let gameSpeed = 10;
+let gameSpeedBase = 10;
+let gameSpeed;
 // let x = [];
 // let y = [];
 // let size = [];
@@ -69,7 +70,22 @@ class Puck {
                     this.ySpeed = 3 * ((this.y - middleY)/(player.sizeY/2));
                     this.cd = 10;
                 }
+
+                // increment speed
+                if (this.xSpeed > 15 || this.ySpeed > 15) {
+                    console.log("superfast speed");
+                    gameSpeed = gameSpeedBase + 10;
+
+                } else if (this.xSpeed > 7 || this.ySpeed > 7) {
+                    console.log("fast speed");
+                    gameSpeed = gameSpeedBase + 5;
+                } else {
+                    console.log("low speed");
+                    gameSpeed = gameSpeedBase;
+                }
             }
+
+            
         }
 
         // Gol collision
@@ -88,13 +104,13 @@ class Puck {
         if (this.x-this.size/2 < 0) {
             balls.splice(balls.indexOf(this, 1));
             alert("j2 won");
-            balls.push(new Puck());
+            reset();
         }
         
         if (this.x+this.size/2 > width) {
             balls.splice(balls.indexOf(this, 1));
             alert("j1 won");
-            balls.push(new Puck());
+            reset();
         }
 
         if (this.y-this.size/2 < 0 || this.y+this.size/2 > height) {
@@ -108,6 +124,7 @@ const balls = [];
 const jugadores = [];
 
 function setup() {
+    gameSpeed = gameSpeedBase;
     frameRate(60);
     createCanvas(windowWidth, windowHeight);
     for (let i = 0; i < ballCount; i++) {
@@ -126,6 +143,11 @@ function setup() {
     jugadores.push(new Player(windowWidth - 100, 500));
 
     // raton = new MouseBall();
+}
+
+function reset() {
+    gameSpeed = gameSpeedBase;
+    balls.push(new Puck());
 }
 
 function draw() {
