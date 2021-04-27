@@ -4,7 +4,7 @@ let j1;
 let gameSpeedBase = 10;
 let gameSpeed;
 
-class Player{
+class Player {
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -13,6 +13,23 @@ class Player{
         this.b = 0;
         this.sizeX = 20;
         this.sizeY = 90;
+        this.cd = 0;
+    }
+    display() {
+        fill(this.r, this.g, this.b);
+        rect(this.x, this.y, this.sizeX, this.sizeY);
+    }
+}
+
+class Goal {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.r = 100;
+        this.g = 255;
+        this.b = 0;
+        this.sizeX = 50;
+        this.sizeY = 200;
         this.cd = 0;
     }
     display() {
@@ -77,6 +94,10 @@ class Puck {
                         gameSpeed = gameSpeedBase;
                     }
                 }
+
+                if (obj instanceof Goal) {
+                    
+                }
                 
             }
 
@@ -117,6 +138,8 @@ class Puck {
 
 const balls = [];
 const jugadores = [];
+const goals = [];
+const obstacles = [jugadores, goals];
 
 function setup() {
     gameSpeed = gameSpeedBase;
@@ -181,8 +204,10 @@ function draw() {
         
 
         balls[i].move();
-        for (jugador of jugadores) {
-            balls[i].collision(jugador);
+        for (type of obstacles) {
+            for (obst of type) {
+                balls[i].collision(obst);
+            }
         }
         
         // balls[i].collision(j2);
