@@ -96,7 +96,8 @@ class Puck {
                 }
 
                 if (obj instanceof Goal) {
-                    
+                    alert("Goal");
+                    this.cd = 20;
                 }
                 
             }
@@ -150,6 +151,8 @@ function setup() {
     }
     jugadores.push(new Player(100, 500));
     jugadores.push(new Player(windowWidth - 100 - jugadores[0].sizeX, 500));
+
+    goals.push(new Goal(windowWidth/2, windowHeight/2));
 }
 
 function reset() {
@@ -213,8 +216,10 @@ function draw() {
         // balls[i].collision(j2);
         
     }
-    for (jugador of jugadores) {
-        jugador.display();
+    for (type of obstacles) {
+        for (obst of type) {
+            obst.display();
+        }
     }
     // raton.move();
     // raton.display();
