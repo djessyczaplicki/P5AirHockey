@@ -141,12 +141,12 @@ function draw() {
     textSize(40);
     color(255,0,0);
 
-    if (keyIsDown(87)) {
+    if (keyIsDown(87)) { // W
         if (jugadores[0].y >= 0) {
             jugadores[0].y-=gameSpeed;
         }
     }
-    if (keyIsDown(83)) {
+    if (keyIsDown(83)) { // S
         if (jugadores[0].y <= windowHeight - jugadores[0].sizeY) {
             jugadores[0].y+=gameSpeed;
         }
