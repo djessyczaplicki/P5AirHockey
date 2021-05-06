@@ -48,8 +48,9 @@ class Puck {
         if (this.cd > 0){
             this.cd--;
         } else {
-
-            if ((this.x - this.size/2 <= obj.x + obj.sizeX && this.x+this.size/2 >= obj.x) && (this.y+this.size/2 >= obj.y && this.y-this.size/2 <= obj.y + obj.sizeY)) {
+            // if ball touches player
+            if ((this.x - this.size / 2 <= obj.x + obj.sizeX && this.x + this.size / 2 >= obj.x)
+            && (this.y + this.size / 2 >= obj.y && this.y - this.size / 2 <= obj.y + obj.sizeY)) {
                 if (obj instanceof Player) {
                     const player = obj;
                     console.log("he's a player");
